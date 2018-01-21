@@ -1,3 +1,9 @@
+
+import Control.ListenerBottone;
+import Control.ListenerCheckBox;
+import Control.ListenerSlider;
+import View.MainFrame;
+
 /*
  * Copyright 2018 Filippo Stella.
  *
@@ -22,7 +28,14 @@
 public class Main {
 
     public static void main(String[] args) {
-        
+          
+            MainFrame mf = new MainFrame();
+            ListenerCheckBox lcb = new ListenerCheckBox(mf);
+            ListenerSlider sl = new ListenerSlider(mf);
+            ListenerBottone lb = new ListenerBottone(mf);
+            mf.setVisible(true);
+            
+       
     }
     
 }
