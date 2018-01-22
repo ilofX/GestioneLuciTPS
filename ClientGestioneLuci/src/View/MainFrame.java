@@ -420,7 +420,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     
     public ByteBuffer getByteBuffer(){
-        ByteBuffer ris = ByteBuffer.allocate(1024);
+        ByteBuffer ris = ByteBuffer.allocate(16);
         ris.putShort(new Short(""+this.jSliderSerra1.getValue()));
         ris.putShort(new Short(""+this.jSliderSerra2.getValue()));
         ris.putShort(new Short(""+this.jSliderSerra3.getValue()));

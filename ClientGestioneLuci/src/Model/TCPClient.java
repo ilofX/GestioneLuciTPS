@@ -40,7 +40,7 @@ public class TCPClient extends Thread {
         super("Client");
         this.mf = mf;
         this.sendBuffer = sendBuffer;
-        this.receiveBuffer = ByteBuffer.allocate(1024);
+        this.receiveBuffer = ByteBuffer.allocate(16);
         this.ADDRESS = ADDRESS;
         this.PORT = PORT;
     }
@@ -56,7 +56,7 @@ public class TCPClient extends Thread {
             dataOut.flush();
             System.out.println("sent");
             sleep(128);
-            byte ris[] = new byte[1024];
+            byte ris[] = new byte[16];
             dataIn.read(ris);
             this.receiveBuffer.put(ris);
             this.receiveBuffer.compact();
