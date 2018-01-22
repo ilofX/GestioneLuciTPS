@@ -16,6 +16,8 @@
 package Model;
 
 import Model.TCPServer.HandlePacket;
+import View.MainFrame;
+import java.awt.Color;
 import java.nio.ByteBuffer;
 
 /**
@@ -26,8 +28,10 @@ import java.nio.ByteBuffer;
 public class GestioneLocali {
     
     private final Short locali[];
+    private final MainFrame mf;
 
-    public GestioneLocali() {
+    public GestioneLocali(MainFrame mf) {
+        this.mf = mf;
         this.locali = new Short[8];
         for (Short locale : this.locali) {
             locale = new Short("0");
@@ -41,7 +45,50 @@ public class GestioneLocali {
                     this.locali[i]=locali[i];
                 }
             }
-            thread.notify();
+            this.refreshLocaliGrafica();
+        }
+    }
+    
+    private void refreshLocaliGrafica(){
+        int r = 255, g = 255, b = 0;
+        for(int i=0;i<this.locali.length;i++){
+            int ris = locali[i].intValue();
+            switch(i){
+                case 0:
+                    this.mf.getSerra1().setOpaque(true);
+                    this.mf.getSerra1().setBackground(new Color(r, g, b, ris));
+                    break;
+                case 1:
+                    this.mf.getSerra2().setOpaque(true);
+                    this.mf.getSerra2().setBackground(new Color(r, g, b, ris));
+                    break;
+                case 2:
+                    this.mf.getSerra3().setOpaque(true);
+                    this.mf.getSerra3().setBackground(new Color(r, g, b, ris));
+                    break;
+                case 3:
+                    this.mf.getSerra4().setOpaque(true);
+                    this.mf.getSerra4().setBackground(new Color(r, g, b, ris));
+                    break;
+                case 4:
+                    this.mf.getSerra5().setOpaque(true);
+                    this.mf.getSerra5().setBackground(new Color(r, g, b, ris));
+                    break;
+                case 5:
+                    this.mf.getSerra6().setOpaque(true);
+                    this.mf.getSerra6().setBackground(new Color(r, g, b, ris));
+                    break;
+                case 6:
+                    this.mf.getSerra7().setOpaque(true);
+                    this.mf.getSerra7().setBackground(new Color(r, g, b, ris));
+                    break;
+                case 7:
+                    this.mf.getSerra8().setOpaque(true);
+                    this.mf.getSerra8().setBackground(new Color(r, g, b, ris));
+                    break;
+                default:
+                    break;
+            }
         }
     }
     

@@ -27,10 +27,14 @@ import View.MainFrame;
 public class Main {
 
     public static void main(String[] args) {
-        MainFrame mf = new MainFrame();
-        GestioneLocali gl = new GestioneLocali();
-        ListenerBottone lb = new ListenerBottone(mf, gl, 6969);
-        mf.setVisible(true);
+        
+         
+            MainFrame mf = new MainFrame();
+            GestioneLocali gl = new GestioneLocali(mf);
+            ListenerBottone lb = new ListenerBottone(mf, gl, 6969);
+            mf.setVisible(true);
+            
+        
     }
     
 }

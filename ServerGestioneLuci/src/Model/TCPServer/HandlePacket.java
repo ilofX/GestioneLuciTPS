@@ -16,9 +16,11 @@
 package Model.TCPServer;
 
 import Model.GestioneLocali;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,31 +43,36 @@ public class HandlePacket extends Thread{
     14-15 Bytes Serra 8 
     */
     
-    private final SelectionKey key;
-    private final ByteBuffer receiveBuffer;
+    private final Socket s;
     private final GestioneLocali gestioneLocali;
-    private final Server server;
 
-    public HandlePacket(SelectionKey key, ByteBuffer receiveBuffer, GestioneLocali gestioneLocali, Server server) {
-        super("Handle packet");
-        this.key = key;
-        this.receiveBuffer = receiveBuffer;
+    public HandlePacket(Socket s, GestioneLocali gestioneLocali) {
+        super("Handle connection");
+        this.s = s;
         this.gestioneLocali = gestioneLocali;
-        this.server = server;
     }
 
     @Override
     public void run() {
         try {
-            Short locali[] = new Short[8];
-            for(int i=0;i<locali.length;i++){
-                locali[i]=this.receiveBuffer.getShort(i*2);
+            DataInputStream in = new DataInputStream(this.s.getInputStream());
+            DataOutputStream out = new DataOutputStream(this.s.getOutputStream());
+            
+            byte read[] = new byte[16];
+            in.read(read);
+            ByteBuffer readBytes = ByteBuffer.wrap(read);
+            readBytes.compact();           
+            Short ris[] = new Short[8];
+            readBytes.flip();
+            for(int i=0;i<ris.length;i++){
+                ris[i] = readBytes.getShort();
             }
-            this.gestioneLocali.editLocali(locali,this);
-            this.wait();
-            this.server.send(key, this.gestioneLocali.getLocaliByte());
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HandlePacket.class.getName()).log(Level.SEVERE, null, ex);
+            this.gestioneLocali.editLocali(ris, this);         
+            
+            out.write(this.gestioneLocali.getLocaliByte().array());
+            in.close();
+            out.close();
+            this.s.close();
         } catch (IOException ex) {
             Logger.getLogger(HandlePacket.class.getName()).log(Level.SEVERE, null, ex);
         }
