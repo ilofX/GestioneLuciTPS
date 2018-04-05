@@ -94,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         Serra8.setText("Serra 8");
 
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Stato Server");
+        jLabel1.setText("Stato Server (PORTA: 6969)");
 
         jProgressBar1.setBackground(new java.awt.Color(77, 77, 77));
         jProgressBar1.setForeground(new java.awt.Color(204, 204, 204));
